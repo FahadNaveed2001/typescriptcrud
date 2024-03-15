@@ -133,7 +133,6 @@ export default function CRUDFunction(): JSX.Element {
       modalLanguage.trim() === "" ||
       modalDescription.trim() === ""
     ) {
-      // Prevent saving changes if any field is empty
       return;
     }
 
@@ -508,36 +507,46 @@ export default function CRUDFunction(): JSX.Element {
 
                 <div className="mt-5">
                   <div className="w-full py-4 bg-[#222222] shadow-2xl shadow-black rounded">
-                    <input
+                    <select
                       value={modalStack}
                       onChange={(e) => setModalStack(e.target.value)}
-                      type="text"
-                      className="pt-2 px-4 text-[17px] focus:outline-none bg-transparent w-full tracking-[3px] text-sm disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700"
-                      placeholder="Stack"
-                    />
+                      className="pt-2 px-4 text-[17px] focus:outline-none bg-[#222222] w-full tracking-[3px] text-sm disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700"
+                    >
+                      <option value="Full Stack">Full Stack</option>
+                      <option value="Front End">Front End</option>
+                      <option value="Back End">Back End</option>
+                    </select>
                   </div>
                 </div>
 
                 <div className="mt-5">
                   <div className="w-full py-4 bg-[#222222] shadow-2xl shadow-black rounded">
-                    <input
+                    <select
                       value={modalAppType}
                       onChange={(e) => setModalAppType(e.target.value)}
-                      type="text"
-                      className="pt-2 px-4 text-[17px] focus:outline-none bg-transparent w-full tracking-[3px] text-sm disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700"
-                      placeholder="App Type"
-                    />
+                      className="pt-2 px-4 text-[17px] focus:outline-none bg-[#222222] w-full tracking-[3px] text-sm disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700"
+                    >
+                      <option value="Web App">Web App</option>
+                      <option value="Mobile App">Mobile App</option>
+                      <option value="IOS App">IOS App</option>
+                    </select>
                   </div>
                 </div>
                 <div className="mt-5">
                   <div className="w-full py-4 bg-[#222222] shadow-2xl shadow-black rounded">
-                    <input
+                    <select
                       value={modalLanguage}
                       onChange={(e) => setModalLanguage(e.target.value)}
-                      type="text"
-                      className="pt-2 px-4 text-[17px] focus:outline-none bg-transparent w-full tracking-[3px] text-sm disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700"
-                      placeholder="Language"
-                    />
+                      className="pt-2 px-4 text-[17px] focus:outline-none bg-[#222222] w-full tracking-[3px] text-sm disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700"
+                    >
+                      <option value="PHP/Laravel">PHP/Laravel</option>
+                      <option value="Go/Gin">Go/Gin</option>
+                      <option value="Python/Django">Python/Django</option>
+                      <option value="Ruby/Rails">Ruby/Rails</option>
+                      <option value="C#/ASP.NET">C#/ASP.NET</option>
+                      <option value="Java">Java</option>
+                      <option value="Node.js/Express.">Node.js/Express.</option>
+                    </select>
                   </div>
                 </div>
 
