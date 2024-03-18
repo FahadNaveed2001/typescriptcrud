@@ -38,6 +38,18 @@ export default function CRUDFunction(): JSX.Element {
   const [modalAppType, setModalAppType] = useState<string>("");
   const [modalLanguage, setModalLanguage] = useState<string>("");
   const [modalDescription, setModalDescription] = useState<string>("");
+  const [projectNameError, setProjectNameError] = useState<string>("");
+  const [stackError, setStackError] = useState<string>("");
+  const [appTypeError, setAppTypeError] = useState<string>("");
+  const [languageError, setLanguageError] = useState<string>("");
+  const [descriptionError, setDescriptionError] = useState<string>("");
+  const [modalProjectNameError, setModalProjectNameError] =
+    useState<string>("");
+  const [modalStackError, setModalStackError] = useState<string>("");
+  const [modalAppTypeError, setModalAppTypeError] = useState<string>("");
+  const [modalLanguageError, setModalLanguageError] = useState<string>("");
+  const [modalDescriptionError, setModalDescriptionError] =
+    useState<string>("");
 
   useEffect(() => {
     const storedItems = localStorage.getItem("items");
@@ -51,14 +63,44 @@ export default function CRUDFunction(): JSX.Element {
   }, []);
 
   const handleAdd = (): void => {
-    if (
-      projectName.trim() === "" ||
-      stack.trim() === "" ||
-      appType.trim() === "" ||
-      language.trim() === "" ||
-      description.trim() === ""
-    ) {
-      return alert("Fill all fields to keep a Record");
+    setProjectNameError("");
+    setStackError("");
+    setAppTypeError("");
+    setLanguageError("");
+    setDescriptionError("");
+
+    let hasError = false;
+
+    if (projectName.trim() === "") {
+      setProjectNameError("Please enter the Name of your Project.");
+      hasError = true;
+    }
+    if (stack.trim() === "") {
+      setStackError("Please select the Stack.");
+      hasError = true;
+    }
+    if (appType.trim() === "") {
+      setAppTypeError("Please select The App Type.");
+      hasError = true;
+    }
+    if (language.trim() === "") {
+      setLanguageError("Please select The language.");
+      hasError = true;
+    }
+    if (description.trim() === "") {
+      setDescriptionError("Please enter the Desicription of your Project.");
+      hasError = true;
+    }
+
+    if (hasError) {
+      setTimeout(() => {
+        setProjectNameError("");
+        setStackError("");
+        setAppTypeError("");
+        setLanguageError("");
+        setDescriptionError("");
+      }, 3000);
+      return;
     }
 
     const newItem: Item = {
@@ -122,17 +164,47 @@ export default function CRUDFunction(): JSX.Element {
   };
 
   const handleSaveChanges = (): void => {
+    setModalProjectNameError("");
+    setModalStackError("");
+    setModalAppTypeError("");
+    setModalLanguageError("");
+    setModalDescriptionError("");
+
     if (!selectedProject) {
-      return alert("Fill all fields to keep a Record");
+      return;
     }
 
-    if (
-      modalProjectName.trim() === "" ||
-      modalStack.trim() === "" ||
-      modalAppType.trim() === "" ||
-      modalLanguage.trim() === "" ||
-      modalDescription.trim() === ""
-    ) {
+    let hasError = false;
+
+    if (modalProjectName.trim() === "") {
+      setModalProjectNameError("Please enter a project name.");
+      hasError = true;
+    }
+    if (modalStack.trim() === "") {
+      setModalStackError("Please select a stack.");
+      hasError = true;
+    }
+    if (modalAppType.trim() === "") {
+      setModalAppTypeError("Please select an app type.");
+      hasError = true;
+    }
+    if (modalLanguage.trim() === "") {
+      setModalLanguageError("Please select a programming language.");
+      hasError = true;
+    }
+    if (modalDescription.trim() === "") {
+      setModalDescriptionError("Please enter a description.");
+      hasError = true;
+    }
+
+    if (hasError) {
+      setTimeout(() => {
+        setModalProjectNameError("");
+        setModalStackError("");
+        setModalAppTypeError("");
+        setModalLanguageError("");
+        setModalDescriptionError("");
+      }, 2000);
       return;
     }
 
@@ -157,6 +229,7 @@ export default function CRUDFunction(): JSX.Element {
     setModalDescription("");
     setItems(updatedItems);
   };
+
   const handleProjectClick = (id: number): void => {
     const selectedItem = items.find((item) => item.id === id);
     if (selectedItem) {
@@ -183,6 +256,9 @@ export default function CRUDFunction(): JSX.Element {
               placeholder="Project Name"
             />
           </div>
+          {projectNameError && (
+            <div className="text-red-500 mt-2">{projectNameError}</div>
+          )}
         </div>
         <div className="flex justify-between md:flex-row flex-col mt-6 gap-4 md:gap-0">
           <div className="inline-block relative w-full md:w-[32%]">
@@ -196,6 +272,9 @@ export default function CRUDFunction(): JSX.Element {
               <option value="Front End">Front End</option>
               <option value="Back End">Back End</option>
             </select>
+            {stackError && (
+              <div className="text-red-500 mt-2">{stackError}</div>
+            )}
             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-100">
               <svg
                 className="fill-current h-4 w-4"
@@ -217,6 +296,9 @@ export default function CRUDFunction(): JSX.Element {
               <option value="Mobile App">Mobile App</option>
               <option value="IOS App">IOS App</option>
             </select>
+            {appTypeError && (
+              <div className="text-red-500 mt-2">{appTypeError}</div>
+            )}
             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-100">
               <svg
                 className="fill-current h-4 w-4"
@@ -242,6 +324,9 @@ export default function CRUDFunction(): JSX.Element {
               <option value="Java">Java</option>
               <option value="Node.js/Express.">Node.js/Express.</option>
             </select>
+            {languageError && (
+              <div className="text-red-500 mt-2">{languageError}</div>
+            )}
             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-100">
               <svg
                 className="fill-current h-4 w-4"
@@ -261,7 +346,9 @@ export default function CRUDFunction(): JSX.Element {
             placeholder="Description"
           />
         </div>
-
+        {descriptionError && (
+          <div className="text-red-500 mt-2">{descriptionError}</div>
+        )}
         <div className="mt-5">
           <button
             onClick={handleAdd}
@@ -503,6 +590,11 @@ export default function CRUDFunction(): JSX.Element {
                       placeholder="Project Name"
                     />
                   </div>
+                  {modalProjectNameError && (
+                    <div className="text-red-500 mt-2">
+                      {modalProjectNameError}
+                    </div>
+                  )}
                 </div>
 
                 <div className="mt-5">
@@ -517,6 +609,9 @@ export default function CRUDFunction(): JSX.Element {
                       <option value="Back End">Back End</option>
                     </select>
                   </div>
+                  {modalStackError && (
+                    <div className="text-red-500 mt-2">{modalStackError}</div>
+                  )}
                 </div>
 
                 <div className="mt-5">
@@ -531,6 +626,9 @@ export default function CRUDFunction(): JSX.Element {
                       <option value="IOS App">IOS App</option>
                     </select>
                   </div>
+                  {modalAppTypeError && (
+                    <div className="text-red-500 mt-2">{modalAppTypeError}</div>
+                  )}
                 </div>
                 <div className="mt-5">
                   <div className="w-full py-4 bg-[#222222] shadow-2xl shadow-black rounded">
@@ -548,6 +646,11 @@ export default function CRUDFunction(): JSX.Element {
                       <option value="Node.js/Express.">Node.js/Express.</option>
                     </select>
                   </div>
+                  {modalLanguageError && (
+                    <div className="text-red-500 mt-2">
+                      {modalLanguageError}
+                    </div>
+                  )}
                 </div>
 
                 <div className="mt-5">
@@ -558,6 +661,11 @@ export default function CRUDFunction(): JSX.Element {
                     placeholder="Description"
                   />
                 </div>
+                {modalDescriptionError && (
+                  <div className="text-red-500 mt-2">
+                    {modalDescriptionError}
+                  </div>
+                )}
                 <div className="mt-5">
                   <button
                     onClick={handleSaveChanges}
